@@ -1,0 +1,35 @@
+{% include 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min1.css' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<center>
+  {% block content %}
+  <div class="container">
+    <h1>{{ service.type }}</h1>
+    <p>{{ service.description }}</p>
+    <!--<p>{{ service.projet }}</p>-->
+
+    <div class="row">
+      {% for projet in service.projet_set.all %}
+      <div class="col-12 col-sm-6 col-md-4 mb-4">
+        <div class="card">
+          <img src="/media/{{projet.img}}" class="card-img-top" alt="Project Image" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ projet.libellé }}</h5>
+            <p class="card-text">{{ projet.description }}</p>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col">
+        <p>Aucun projet disponible.</p>
+      </div>
+      {% endfor %}
+    </div>
+    <button class="btn btn-primary">
+      <a href="{% url 'listSer' %}" style="color: aliceblue;">Back</a>
+    </button>
+  </div>
+  {% endblock %}
+</center>

@@ -1,0 +1,16 @@
+{% include 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min1.css' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<center>
+{% block content %}
+  <h1>{{ personnel.nom }}</h1>
+  <p>cv: {{ personnel.fichier_CV }}</p>
+  <p>photo: {{ personnel.fichier_photo }}</p>
+  <p>linkedin: {{ personnel.lien_linkedln }}</p>
+
+<button class="btn btn-primary"><a href="{%url 'listPerson' %}" style="color: aliceblue;">Back</a>
+</button>
+{% endblock %}
+</center>

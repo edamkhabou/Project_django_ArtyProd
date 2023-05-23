@@ -1,0 +1,52 @@
+{% include 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min1.css' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% block content %}
+
+
+<form method='POST' class="post-form">
+{% csrf_token %}
+<div class="album py-5 bg-light">
+  <div class="container">
+    {% if user.is_superuser %}
+    <button type="button" class="btn btn-sm btn-outline-secondary" ><a href="{% url 'Addprojet' %}" class="btn btn-default">Ajouter un Projet</a></button>
+    {%endif%}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for projet in listp %}
+      <div class="col ">
+        <div class="card shadow-sm">
+            <img src='/media/{{ projet.img }}' class="card-img-top" height="200px"  width="200px">
+<div class="card-header">
+            <figcaption class="figure-caption"> 
+              {{projet.libellé}} 
+               </figcaption>
+               <p> {{projet.description}} </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  {% if user.is_superuser %}
+
+              <div class="btn-group">
+               <!-- <button type="button" class="btn btn-sm btn-outline-secondary" name="edit"><a href="{% url 'edit_projet' projet.id %}">Edit</a></button>-->
+                <button type="button" name="view"><a href="{% url 'view_projet' projet.id %}">View</a></button>
+                <button type="button"name="edit"><a href="{% url 'edit_projet' projet.id %}">Edit</a></button>
+                <button type="button" name="Delete"><a href="{% url 'delete_projet' projet.id %}">Delete</a></button>
+                <button type="button"  name="release"><a href="{% url 'release_equipe' projet.id %}">achevés le projet</a></button>
+
+
+              </div>
+              {% else %}
+              <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-secondary" name="view"><a href="{% url 'view_projet' projet.id %}">View</a></button>
+            </div>
+            {%endif%}
+              <small class="text-muted">29/04/2023</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

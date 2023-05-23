@@ -1,0 +1,46 @@
+{% include 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min1.css' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% block content %}
+
+
+<form method='POST' class="post-form">
+{% csrf_token %}
+<div class="album py-5 bg-light">
+  <div class="container">
+    {% if user.is_superuser %}
+    <button type="button" class="btn btn-sm btn-outline-secondary" ><a href="{% url 'AddService' %}" class="btn btn-default">Ajouter un service</a></button>
+   {% endif%}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for service in list %}
+      <div class="col ">
+        <div class="card shadow-sm">
+<div class="card-header">
+            <figcaption class="figure-caption"> 
+              {{service.type}} 
+               </figcaption>
+               <p> {{service.description}} </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  {% if user.is_superuser %}
+              <div class="btn-group">
+                <button type="button"  name="view"><a href="{% url 'view_service' service.id %}" class="btn btn-default">View</a></button>
+                <button type="button"  name="edit"><a href="{% url 'edit_Service' service.id %}" class="btn btn-default">Edit</a></button>
+                <button type="button"  name="Delete"><a href="{% url 'delete_service' service.id %}" class="btn btn-default">Delete</a></button>
+
+              </div>
+              {% else %}
+              <div class="btn-group">
+                <button type="button"  name="view"><a href="{% url 'view_service' service.id %}" class="btn btn-default">View</a></button>
+                </div>
+                {% endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

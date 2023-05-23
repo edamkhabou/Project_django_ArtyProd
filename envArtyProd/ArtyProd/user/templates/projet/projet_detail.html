@@ -1,0 +1,17 @@
+{% include 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min1.css' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<center>
+{% block content %}
+  <h1>{{ projet.libellé }}</h1>
+  <p>description: {{ projet.description }}</p>
+  <p>date_debut: {{ projet.date_debut }}</p>
+  <p>date_fin: {{ projet.date_fin }}</p>
+  <p>acheve: {{ projet.acheve }}</p>
+
+<button class="btn btn-primary"><a href="{%url 'listprojet'%}" style="color: aliceblue;">Back</a>
+</button>
+{% endblock %}
+</center>

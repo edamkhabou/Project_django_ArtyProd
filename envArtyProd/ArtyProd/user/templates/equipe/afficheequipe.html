@@ -1,0 +1,42 @@
+{% include 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min1.css' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% block content %}
+
+
+<form method='POST' class="post-form">
+{% csrf_token %}
+<div class="album py-5 bg-light">
+  <div class="container">
+    <button type="button" class="btn btn-primary">
+      <a href="{% url 'equipe_create' %}" class="text-white">Ajouter equipe</a>
+    </button>   
+    {% for team in listq %}
+
+     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="col ">
+        <div class="card shadow-sm">
+            <figcaption class="figure-caption"> 
+              <h5>{{ team.nom }}</h5>
+            </figcaption>
+            <ul>
+              {% for personnel in team.personnels.all %}
+                  <li>{{ personnel.nom }}</li>
+              {% endfor %}
+          </ul>
+                <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary" name="edit"><a href="{% url 'edit_team' team.id %}">Edit</a></button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" name="Delete"><a href="{% url 'delete_team' team.id %}">Delete</a></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

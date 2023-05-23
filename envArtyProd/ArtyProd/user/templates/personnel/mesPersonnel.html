@@ -1,0 +1,39 @@
+{% include 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min1.css' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% block content %}
+
+
+<form method='POST' class="post-form">
+{% csrf_token %}
+<div class="album py-5 bg-light">
+  <div class="container">
+    <button type="button" class="btn btn-sm btn-outline-secondary" ><a href="{% url 'personnel_create' %}">Ajouter un personne</a></button>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for personne in listpe %}
+      <div class="col ">
+        <div class="card shadow-sm">
+<div class="card-header">
+            <figcaption class="figure-caption"> 
+              {{personne.nom}} 
+               </figcaption>
+               <img src='/media/{{ personne.fichier_photo }}' class="card-img-top" height="200px"  width="200px">
+
+                <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary" name="edit"><a href="{% url 'personnel_edit' personne.id %}">Edit</a></button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" name="Delete"><a href="{% url 'personnel_delete' personne.id %}">Delete</a></button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" name="Delete"><a href="{% url 'view_personne' personne.id %}">View</a></button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
